@@ -75,7 +75,9 @@ public class PostController {
         }
         boolean follows = followerRepository.follows(follower, user);
         if (!follows) {
-            return Response.status(Response.Status.FORBIDDEN).build();
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity("You can't see these posts")
+                    .build();
         }
         var query = postRepository.find("user", Sort.by("dateTime", Sort.Direction.Descending), user);
         var list = query.list();
